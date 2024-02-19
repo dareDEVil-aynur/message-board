@@ -11,7 +11,7 @@ Ensure these ports are available before launching the app:
 
 ## Quick Start
 
-Run the following command to start both the server and client simultaneously, installing any necessary dependencies:
+Run the following command on project root to start both the server and client concurrently:
 
 ```bash
 npm run start
