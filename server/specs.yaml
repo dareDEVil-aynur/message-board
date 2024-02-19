@@ -1,0 +1,96 @@
+openapi: 3.0.0
+info:
+  title: Message Board API
+  version: 1.0.0
+paths:
+  /channels:
+    get:
+      summary: List all channels
+      responses:
+        "200":
+          description: A list of channels
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    name:
+                      type: string
+
+  /messages/{channelName}:
+    get:
+      summary: Get messages for a channel
+      parameters:
+        - in: path
+          name: channelName
+          schema:
+            type: string
+          required: true
+      responses:
+        "200":
+          description: An array of messages for the specified channel
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    text:
+                      type: string
+                    user:
+                      type: string
+                    timestamp:
+                      type: number
+        "404":
+          description: Channel not found
+
+  /{channelName}/messages:
+    post:
+      summary: Post a new message to a channel
+      parameters:
+        - in: path
+          name: channelName
+          schema:
+            type: string
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text:
+                  type: string
+                user:
+                  type: string
+              required:
+                - text
+                - user
+      responses:
+        "201":
+          description: Message successfully added to the channel
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  text:
+                    type: string
+                  user:
+                    type: string
+                  timestamp:
+                    type: number
+        "400":
+          description: Invalid message or user data
+        "404":
+          description: Channel not found
